@@ -1,12 +1,18 @@
 
+interface Props {
+    children: React.ReactNode;
+}
  
- const layout = () => {
+ const Layout = ({children}: Props) => {
    return (
      <div>
-        Home layout.
+        <nav className="bg-red-500 text-white w-full p-2">
+            <p>Navbar</p>
+        </nav>
+        {children}
      </div>
    )
  }
  
- export default layout
+ export default Layout
  
