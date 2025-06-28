@@ -17,7 +17,10 @@ interface NavbarItemProps {
 
 const NavbarItem = ({href, children, isActive} : NavbarItemProps) => {
     return (
-        <Button>
+        <Button 
+            variant="outline"
+            className={cn("bg-transparent hover:bg-transparent rounded-full hover:border-primary border-transparent")}
+        >
             {children}
         </Button>
     );
