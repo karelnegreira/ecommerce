@@ -18,10 +18,17 @@ interface NavbarItemProps {
 const NavbarItem = ({href, children, isActive} : NavbarItemProps) => {
     return (
         <Button>
-
+            {children}
         </Button>
     );
 }
+
+const navbarItems = [
+    {href: "/", children: "Home"},
+    {href: "/about", children: "About"},
+    {href: "/features", children: "Features"},
+    {href: "/contact", children: "Contact"},
+]
 
 export const Navbar = () => {
   return (
@@ -31,6 +38,14 @@ export const Navbar = () => {
             funroad
         </span>
       </Link>
+
+      <div className="items-center gap-4 hidden lg:flex">
+        {
+            navbarItems.map((item) => (
+                <NavbarItem key={item.href} {...item}/>
+            ))
+        }
+      </div>
     </nav>
   )
 }
