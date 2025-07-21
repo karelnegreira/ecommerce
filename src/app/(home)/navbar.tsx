@@ -44,7 +44,7 @@ const navbarItems = [
 
 export const Navbar = () => {
     const pathname = usePathname();
-    
+
   return (
     <nav className="h-20 flex border-b justify-between font-medium bg-white">
       <Link href="/" className="pl-6 flex items-center">
@@ -66,6 +66,18 @@ export const Navbar = () => {
                 </NavbarItem>
             ))
         }
+      </div>
+
+      <div className="hidden lg:flex">
+        <Button
+            variant="secondary"
+            className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg"
+        >
+            Log in
+        </Button>
+        <Button>
+            Start selling
+        </Button>
       </div>
     </nav>
   )
