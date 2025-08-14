@@ -7,6 +7,8 @@ import {
 } from '@/components/ui/sheet';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Scroll } from 'lucide-react';
+import Link from 'next/link';
 
 
 interface NavbarItem {
@@ -37,6 +39,18 @@ const NavbarSidebar = ({items, open, onOpenChange}: Props) => {
                     </SheetTitle>
                 </div>
             </SheetHeader>
+            <ScrollArea className="flex flex-col overflow-y-auto h-full pb-2">
+                {items.map((item) => (
+                    <Link 
+                        key={item.href} 
+                        href={item.href}
+                        className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
+
+                    >
+                        {item.children} 
+                    </Link>
+                ))}
+            </ScrollArea>
         </SheetContent>
 
     </Sheet>
