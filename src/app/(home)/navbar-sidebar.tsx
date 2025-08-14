@@ -50,6 +50,14 @@ const NavbarSidebar = ({items, open, onOpenChange}: Props) => {
                         {item.children} 
                     </Link>
                 ))}
+                <div className="border-t">
+                    <Link href="/sign-in" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium">
+                        Log in
+                    </Link>
+                    <Link href="/sign-up" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium">
+                        Start selling
+                    </Link>
+                </div>
             </ScrollArea>
         </SheetContent>
 
