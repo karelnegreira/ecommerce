@@ -49,7 +49,7 @@ export const Navbar = () => {
 
     const pathname = usePathname();
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
 
   return (
