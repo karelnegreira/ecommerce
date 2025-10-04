@@ -10,6 +10,7 @@ export default async function Home() {
 
   const data = await payload.find({
     collection: "categories", 
+    depth: 1,  //populate subcategorys
     where: {
       parent: {
         exists: false, 
