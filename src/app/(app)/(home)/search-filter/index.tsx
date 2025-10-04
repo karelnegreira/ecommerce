@@ -1,8 +1,13 @@
 
-export const SearchFilters = () => {
+
+interface SearchFilterProps {
+    data: any
+}
+
+export const SearchFilters = ({ data }: SearchFilterProps) => {
   return (
     <div>
-      Search Filters
+      {JSON.stringify(data, null , 2)} 
     </div>
   );
 };
