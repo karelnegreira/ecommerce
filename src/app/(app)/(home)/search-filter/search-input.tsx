@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 
 interface Props {
@@ -9,6 +10,7 @@ export const SearchInput = ({disabled}: Props) => {
         <div className="flex items-center gap-2 w-full">
             <div className="relative w-full">
                 <SearchIcon className=""/>
+                <Input />
             </div>
         </div>
     )
