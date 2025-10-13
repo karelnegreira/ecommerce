@@ -19,7 +19,7 @@ export const Categories = ({data}: CategoriesProps) => {
     const [isAnyHovered, setIsAnyHovered] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const activeCategory = "All";
+    const activeCategory = "all";
 
     useEffect(() => {
         
@@ -33,7 +33,7 @@ export const Categories = ({data}: CategoriesProps) => {
 
               <CategoryDropdown  
                   category={category}
-                  isActive={false}
+                  isActive={activeCategory === category.slug}
                   isNavigationHovered={false}
               />
           </div>
