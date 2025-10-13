@@ -21,9 +21,40 @@ export const Categories = ({data}: CategoriesProps) => {
 
     const activeCategory = "all";
 
+    const activeCategoryIndex = data.findIndex((cat) => cat.slug === activeCategory);
+    const isActiveCategoryHidden = activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
+
     useEffect(() => {
-        
-    }, [])
+        const calculateVisible = () => {
+          if (!containerRef.current || !meassureRef.current || !viewAllRef.current) return;
+          
+          const containerWidth = containerRef.current.offsetWidth;
+          const viewAllWidth = viewAllRef.current.offsetWidth;
+          const availableWidth = containerWidth - viewAllWidth;
+
+          const items = Array.from(meassureRef.current.children);
+          
+          let totalWidth = 0;
+          let visible = 0;
+          
+          for (const item of items) {
+            const width = item.getBoundingClientRect().width;
+
+            if (totalWidth + width > availableWidth) break;
+
+            totalWidth += width;
+            visible++;
+
+          }
+
+          setVisibleCount(visible);
+        };
+
+        const resizeObserver = new ResizeObserver(calculateVisible);
+        resizeObserver.observe(containerRef.current!);
+
+        return () => resizeObserver.disconnect();
+    }, [data.length])
 
   return (
     <div className="relative w-full">
