@@ -1,9 +1,10 @@
 import { Category } from "@/payload-types"
+import { CustomCategory } from "../types";
 import { CategoryDropdown } from "./category-dropdown"
 
 
 interface CategoriesProps {
-    data: any;
+    data: CustomCategory[];
 }
 
 export const Categories = ({data}: CategoriesProps) => {
@@ -11,7 +12,7 @@ export const Categories = ({data}: CategoriesProps) => {
   return (
     <div className="relative w-full">
       <div className="flex flex-nowrap items-center">
-        {data.map((category: Category) => (
+        {data.map((category) => (
           <div key={category.id}>
 
               <CategoryDropdown  

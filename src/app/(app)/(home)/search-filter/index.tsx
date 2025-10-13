@@ -1,9 +1,10 @@
+import { CustomCategory } from '../types';
 import { Categories } from './categories';
 import { SearchInput } from "./search-input";
 
 
 interface SearchFilterProps {
-    data: any
+    data: CustomCategory[];
 }
 
 export const SearchFilters = ({ data }: SearchFilterProps) => {
