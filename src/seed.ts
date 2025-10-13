@@ -96,7 +96,12 @@ const categories = [
         }
     }
   }
-
-  await seed();
-
-  process.exit(0);
+  try {
+    await seed();
+    console.log("Seeding completed successfully")
+    process.exit(0);
+  } catch (error) {
+    console.error("Error during seeding");
+    process.exit(1);  
+  }
+  
