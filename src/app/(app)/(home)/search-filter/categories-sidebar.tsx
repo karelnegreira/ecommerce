@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/sheet';
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
     open: boolean;
@@ -20,18 +21,51 @@ interface Props {
 
 export const CategoriesSidebar = ({open, onOpenChange, data}: Props) => {
 
+    const router = useRouter();
+
     const [parentCategories, setParentCategories] = useState<CustomCategory[] | null>(null)
     const [selectedCategory, setSelectedCategory] = useState<CustomCategory | null>(null);
 
     //if we 
     const currentCategory = parentCategories ?? data ?? [];
 
+    const handleOpenChange = (open: boolean) => {
+        setSelectedCategory(null);
+        setParentCategories(null);
+        onOpenChange(open);
+    }
+
+    const handleCategoryClick = (category: CustomCategory) => {
+        if (category.subcategories && category.subcategories.length > 0) {
+            setParentCategories(category.subcategories as CustomCategory[]);
+            setSelectedCategory(category)
+        } else {
+            //this is a leaf category with no subcategory
+            if (parentCategories && selectedCategory) {
+                //this is a subcategory - navigate to /category/subcategory
+                router.push(`/${selectedCategory.slug}/${category.slug}`)
+            } else {
+                //htis is the main category navigate to -/category
+                if (category.slug == "all") {
+                    router.push("/");
+                } else {
+                    router.push(`/${category.slug}`);
+                }
+            }
+
+            handleOpenChange(false)
+        }
+    }
+
+    const backgroundColor = selectedCategory?.color || "white";
+
+
     return (
-        <Sheet open={open} onOpenChange={onOpenChange}>
+        <Sheet open={open} onOpenChange={handleOpenChange}>
             <SheetContent
                 side="left"
                 className="p-0 transition-none"
-                style={{ backgroundColor: "white" }}
+                style={{ backgroundColor }}
             >
                 <SheetHeader className="P-4 border-b">
                     <SheetTitle>
@@ -52,6 +86,7 @@ export const CategoriesSidebar = ({open, onOpenChange, data}: Props) => {
                     {currentCategory?.map((category) => (
                         <button
                             key={category.slug}
+                            onClick={() => handleCategoryClick(category)}
                             className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center text-base font-medium cursor-pointer"
                         >
                             {category.name}
