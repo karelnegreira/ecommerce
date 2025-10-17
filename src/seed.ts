@@ -34,6 +34,39 @@ const categories = [
       ],
     },
     {
+      name: 'Fashion',
+      color: '#ec4899', // pink-500
+      slug: 'fashion',
+      subcategories: [
+        { name: "Men's Clothing", slug: 'mens-clothing'},
+        { name: "Women's Clothing", slug: 'womens-clothing'},
+        { name: 'Footwear', slug: 'footwear' },
+        { name: 'Bags & Accessories', slug: 'bags-accessories' },
+      ],
+    },
+    {
+      name: 'Fashion',
+      color: '#ec4899', // pink-500
+      slug: 'fashion',
+      subcategories: [
+        { name: "Men's Clothing", slug: 'mens-clothing'},
+        { name: "Women's Clothing", slug: 'womens-clothing'},
+        { name: 'Footwear', slug: 'footwear' },
+        { name: 'Bags & Accessories', slug: 'bags-accessories' },
+      ],
+    },
+    {
+      name: 'Fashion',
+      color: '#ec4899', // pink-500
+      slug: 'fashion',
+      subcategories: [
+        { name: "Men's Clothing", slug: 'mens-clothing'},
+        { name: "Women's Clothing", slug: 'womens-clothing'},
+        { name: 'Footwear', slug: 'footwear' },
+        { name: 'Bags & Accessories', slug: 'bags-accessories' },
+      ],
+    },
+    {
       name: 'Home & Kitchen', 
       slug: 'home-kitchen',
       color: '#10b981', // emerald-500
