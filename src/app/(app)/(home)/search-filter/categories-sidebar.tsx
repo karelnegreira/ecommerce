@@ -59,6 +59,13 @@ export const CategoriesSidebar = ({open, onOpenChange, data}: Props) => {
 
     const backgroundColor = selectedCategory?.color || "white";
 
+    const handleBackClick = () => {
+        if (parentCategories) {
+            setParentCategories(null);
+            setSelectedCategory(null);
+        }
+    }
+
 
     return (
         <Sheet open={open} onOpenChange={handleOpenChange}>
@@ -76,7 +83,7 @@ export const CategoriesSidebar = ({open, onOpenChange, data}: Props) => {
                     {
                         parentCategories && (
                             <button
-                                onClick={() => {}}
+                                onClick={handleBackClick}
                                 className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
                             >
                                 <ChevronLeftIcon className="size-4 mr-2"/>
