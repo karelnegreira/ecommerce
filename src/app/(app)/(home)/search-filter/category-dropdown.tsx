@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Category } from "@/payload-types";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { CustomCategory } from "../types";
 import { SubcategoryMenu } from "./subcategory-menu";
@@ -29,7 +30,16 @@ export const CategoryDropdown = ({category, isActive, isNavigationHovered}: Cate
     };
 
     const onMouseLeave = () => setIsOpen(false);
+
     const dropdownPosition = getDropdownPosition();
+
+    /*
+    TODO: maybe improving this
+    const toggleDropDown = () => {
+        if (category.subcategories?.docs?.length) {
+            setIsOpen(!isOpen);
+        }
+    };*/
 
   
   return (
@@ -38,6 +48,7 @@ export const CategoryDropdown = ({category, isActive, isNavigationHovered}: Cate
         ref={dropdownRef}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        //onClick={toggleDropDown}
     >
         <div className="relative">
             <Button 
@@ -49,7 +60,12 @@ export const CategoryDropdown = ({category, isActive, isNavigationHovered}: Cate
 
                 )}
             >
-                {category.name}
+                <Link
+                    href={`/${category.slug === "all" ? "" : category.slug}`}
+                >
+                    {category.name}
+                </Link>
+                
             </Button>
             {category.subcategories && category.subcategories.length > 0 && (
                 <div 
