@@ -4,7 +4,7 @@ import configPromise from '@payload-config';
 
 import Footer from "./footer";
 import {Navbar} from "./navbar";
-import { SearchFilters } from "./search-filter";
+import { SearchFilterLoading, SearchFilters } from "./search-filter";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
@@ -51,7 +51,7 @@ interface Props {
      <div className="flex flex-col min-h-screen">
         <Navbar />
             <HydrationBoundary state={dehydrate(queryClient)}>
-                <Suspense>
+                <Suspense fallback={<SearchFilterLoading />}>
                     <SearchFilters />
                 </Suspense>
             </HydrationBoundary>
