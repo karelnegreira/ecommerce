@@ -5,13 +5,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CustomCategory } from "../types";
+
 import { CategoryDropdown } from "./category-dropdown"
 import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 
 interface CategoriesProps {
-    data: CustomCategory[];
+    data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({data}: CategoriesProps) => {
@@ -66,7 +67,7 @@ export const Categories = ({data}: CategoriesProps) => {
 
     <div className="relative w-full">
       {/*categories sidebar */}
-      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} data={data} />
+      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen}  />
 
       {/*Hidden div to meassure all items */}
 
