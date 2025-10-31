@@ -1,6 +1,11 @@
 
-import {headers as getHeaders} from 'next/headers';
+import z from 'zod';
+
+import {headers as getHeaders, cookies as getCookies} from 'next/headers';
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+
+import { TRPCError } from '@trpc/server';
+import { AUTH_COOKIE } from '../constants';
 
 
 
@@ -15,4 +20,118 @@ export const authRouter = createTRPCRouter({
 
         return session;
     }),
+
+    logout: baseProcedure.mutation(async () => {
+        const cookies = await getCookies();
+        cookies.delete(AUTH_COOKIE);
+    }), 
+
+    register: baseProcedure
+        .input(
+            z.object({
+                email: z.string().email(), 
+                password: z.string(), 
+                username: z.string()
+                            .min(3, "Username must be at least 3 characters")
+                            .max(63, "Username must be at most 63 characters")
+                            .regex(
+                                /^[a-z0-9][a-z0-9-]*[a-z0-9]$/, 
+                                "Username must be only lower alphanumeric characters"
+                            )
+                            .refine(
+                                (val) => !val.includes("--"), 
+                                "username cannot contain consecutive hyphons"
+                            )
+                            .transform((val) => val.toLowerCase()), 
+            })
+        ).mutation(async ({input, ctx}) => {
+            await ctx.db.create({
+                collection: "users", 
+                data: {
+                    email: input.email, 
+                    username: input.username, 
+                    password: input.password, 
+                }, 
+            });
+
+            const data = await ctx.db.login({
+                collection: "users", 
+                data: {
+                    email: input.email, 
+                    password: input.password
+                }, 
+            });
+
+            if (!data.token) {
+                throw new TRPCError({
+                    code: "UNAUTHORIZED", 
+                    message: "Failed to login"
+                });
+            }
+
+            const cookies = await getCookies();
+            cookies.set({
+                name: AUTH_COOKIE, 
+                value: data.token, 
+                httpOnly: true, 
+                path: "/", 
+                //sameSite: "none", 
+                //domain: ""
+            //TODO: Ensure cross-domain cookie sharing
+            //funroad.com // initial cookie
+            //karel.funroad.com cookie does not exist
+            }); 
+            
+        }),
+
+    login: baseProcedure
+        .input(
+            z.object({
+                email: z.string().email(), 
+                password: z.string(), 
+                username: z.string()
+                            .min(3, "Username must be at least 3 characters")
+                            .max(63, "Username must be at most 63 characters")
+                            .regex(
+                                /^[a-z0-9][a-z0-9-]*[a-z0-9]$/, 
+                                "Username must be only lower alphanumeric characters"
+                            )
+                            .refine(
+                                (val) => !val.includes("--"), 
+                                "username cannot contain consecutive hyphons"
+                            )
+                            .transform((val) => val.toLowerCase()), 
+            })
+        ).mutation(async ({input, ctx}) => {
+            const data = await ctx.db.login({
+                collection: "users", 
+                data: {
+                    email: input.email, 
+                    password: input.password
+                }, 
+            });
+
+            if (!data.token) {
+                throw new TRPCError({
+                    code: "UNAUTHORIZED", 
+                    message: "Failed to login"
+                });
+            }
+
+            const cookies = await getCookies();
+            cookies.set({
+                name: AUTH_COOKIE, 
+                value: data.token, 
+                httpOnly: true, 
+                path: "/", 
+                //sameSite: "none", 
+                //domain: ""
+            //TODO: Ensure cross-domain cookie sharing
+            //funroad.com // initial cookie
+            //karel.funroad.com cookie does not exist
+            }); 
+           
+            return data;
+        }),
 });
+
