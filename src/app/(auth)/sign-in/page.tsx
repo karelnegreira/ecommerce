@@ -1,10 +1,9 @@
+import { SigninView } from "@/modules/auth/ui/views/sign-in-view"
 
 
 const Page = () => {
   return (
-    <div>
-      Sign in
-    </div>
+    < SigninView />
   )
 }
 
