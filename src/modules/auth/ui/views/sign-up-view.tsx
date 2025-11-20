@@ -1,4 +1,18 @@
+"use client";
 
+import {zodResolver} from '@hookform/resolvers/zod';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+import {
+    Form, 
+    FormControl, 
+    FormField, 
+    FormItem, 
+    FormLabel, 
+    FormMessage
+} from '@/components/ui/form';
 
 export const SignUpView = () => {
     return (
@@ -6,9 +20,12 @@ export const SignUpView = () => {
             <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto">
                 Form column
             </div>
-            <div className="h-screen w-full lg:col-span-2 hidden lg-block">
-                Background column 
-            </div>
+            <div className="h-screen w-full lg:col-span-2 hidden lg-block" style={{
+                backgroundImage: "url('/public/vendor-avatar-faces.png')", 
+                backgroundSize: "cover", 
+                backgroundPosition: "center", 
+            }} />
+                
         </div>
     );
 };
