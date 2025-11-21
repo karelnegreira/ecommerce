@@ -1,6 +1,6 @@
-import { z } from "zod";
+import  z  from "zod";
 
-export const  registerSchemas = z.object({
+export const  registerSchema = z.object({
                 email: z.string().email(), 
                 password: z.string(), 
                 username: z.string()
