@@ -12,6 +12,7 @@ import { Poppins } from "next/font/google"
 import {
     Form, 
     FormControl, 
+    FormDescription, 
     FormField, 
     FormItem, 
     FormLabel, 
@@ -31,6 +32,7 @@ const poppins = Poppins({
 export const SignUpView = () => {
 
     const form = useForm<z.infer<typeof registerSchema>>({
+        mode: "all", 
         resolver: zodResolver(registerSchema), 
         defaultValues: {
             email: "", 
@@ -42,6 +44,11 @@ export const SignUpView = () => {
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         console.log(values)
     }
+
+    const username = form.watch("username");
+    const usernameErrors = form.formState.errors.username;
+
+    const showPreview = username && !usernameErrors;
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -71,6 +78,25 @@ export const SignUpView = () => {
                         <h1 className="text-4xl font-medium">
                             Join to our community! you will make money...
                         </h1>
+                        <FormField
+                            name="username"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Username</FormLabel>
+                                    <FormControl>
+                                        <Input {...field}/>
+                                    </FormControl>
+                                    <FormDescription
+                                        className={cn("hidden", showPreview && "block")}
+                                    >
+                                        Your store will be available at &nbsp
+                                        <strong>{username}</strong>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        
+                        />
                     </form>
                 </Form>
             </div>
