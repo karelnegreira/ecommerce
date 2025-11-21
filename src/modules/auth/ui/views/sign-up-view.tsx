@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {useForm} from 'react-hook-form';
-
+import { Poppins } from "next/font/google"
 
 
 import {
@@ -20,6 +20,12 @@ import {
 
 import { registerSchema } from '../../schemas';
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+const poppins = Poppins({
+    subsets: ["latin"], 
+    weight: ["700"]
+});
 
 
 export const SignUpView = () => {
@@ -47,11 +53,24 @@ export const SignUpView = () => {
                     >
                         <div className="flex items-center justify-between mb-8">
                             <Link href="/">
-                                <span>
+                                <span className={cn("text-2xl font-semibold", poppins.className)}>
                                     funroad
                                 </span>
                             </Link>
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="sm"
+                                className=""
+                            >
+                                <Link prefetch href="/sign-in">
+                                    Sign in 
+                                </Link>
+                            </Button>
                         </div>
+                        <h1 className="text-4xl font-medium">
+                            Join to our community! you will make money...
+                        </h1>
                     </form>
                 </Form>
             </div>
