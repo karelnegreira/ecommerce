@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import {useForm} from 'react-hook-form';
 import { Poppins } from "next/font/google"
 
+import { useMutation } from '@tanstack/react-query';
+
 
 import {
     Form, 
@@ -22,6 +24,7 @@ import {
 import { registerSchema } from '../../schemas';
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -30,6 +33,9 @@ const poppins = Poppins({
 
 
 export const SignUpView = () => {
+
+    const trpc = useTRPC();
+    const register = useMutation(trpc.auth.register.mutationOptions());
 
     const form = useForm<z.infer<typeof registerSchema>>({
         mode: "all", 
@@ -42,7 +48,7 @@ export const SignUpView = () => {
     });
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
-        console.log(values)
+        register.mutate(values);
     }
 
     const username = form.watch("username");
@@ -135,6 +141,7 @@ export const SignUpView = () => {
                         />
 
                         <Button
+                            disabled={register.isPending}
                             type="submit"
                             size="lg"
                             variant="elevated"
