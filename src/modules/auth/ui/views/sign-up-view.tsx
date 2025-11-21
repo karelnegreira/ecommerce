@@ -89,7 +89,8 @@ export const SignUpView = () => {
                                     <FormDescription
                                         className={cn("hidden", showPreview && "block")}
                                     >
-                                        Your store will be available at &nbsp
+                                        Your store will be available at&nbsp
+                                        {/**TODO: use proper method to generate preview url*/}
                                         <strong>{username}</strong>
                                     </FormDescription>
                                     <FormMessage />
@@ -97,6 +98,46 @@ export const SignUpView = () => {
                             )}
                         
                         />
+
+<FormField
+                            name="email"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Email</FormLabel>
+                                    <FormControl>
+                                        <Input {...field}/>
+                                    </FormControl>
+                                    
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        
+                        />
+                        <FormField
+                            name="password"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Password</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} type="password"/>
+                                    </FormControl>
+                                    <FormDescription
+                                        className={cn("hidden", showPreview && "block")}
+                                    >
+                                        Your store will be available at&nbsp
+                                        {/**TODO: use proper method to generate preview url*/}
+                                        <strong>{username}</strong>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        
+                        />
+
+                        <Button>
+                            Create account
+                        </Button>
+
                     </form>
                 </Form>
             </div>
