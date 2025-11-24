@@ -33,6 +33,27 @@ export const authRouter = createTRPCRouter({
                 registerSchema
             )
         .mutation(async ({input, ctx}) => {
+
+            const existingData = await ctx.db.find({
+                collection: "users", 
+                limit: 1, 
+                where: {
+                    username: {
+                        equals: input.username,
+                    },
+                },
+
+            });
+
+            const existingUser = existingData.docs[0];
+
+            if (existingUser) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST", 
+                    message: "Username already taken", 
+                });
+            }
+
             await ctx.db.create({
                 collection: "users", 
                 data: {

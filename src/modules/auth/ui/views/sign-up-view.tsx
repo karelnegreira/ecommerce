@@ -2,7 +2,7 @@
 
 import z from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {useForm} from 'react-hook-form';
@@ -25,6 +25,7 @@ import { registerSchema } from '../../schemas';
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -34,8 +35,17 @@ const poppins = Poppins({
 
 export const SignUpView = () => {
 
+    const router = useRouter();
+
     const trpc = useTRPC();
-    const register = useMutation(trpc.auth.register.mutationOptions());
+    const register = useMutation(trpc.auth.register.mutationOptions({
+        onError: (error) => {
+            toast.error(error.message)
+        }, 
+        onSuccess: () => {
+            router.push("/");
+        }
+    }));
 
     const form = useForm<z.infer<typeof registerSchema>>({
         mode: "all", 
