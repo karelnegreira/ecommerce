@@ -1,8 +1,11 @@
-import { TRPCProvider, TRPCReactProvider } from "@/trpc/client";
+
+
+import { TRPCReactProvider } from "@/trpc/client";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 
 import "./globals.css";
+import { Toaster } from "sonner";
 
 
  const dmSans = DM_Sans({
@@ -24,8 +27,10 @@ export default function RootLayout({
       <body
         className={`${dmSans.className} antialiased`}
       >
+       
         <TRPCReactProvider>
             {children}
+            <Toaster />
         </TRPCReactProvider>
         
       </body>
