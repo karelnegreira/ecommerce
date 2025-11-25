@@ -1,6 +1,4 @@
 
-import z from 'zod';
-
 import {headers as getHeaders, cookies as getCookies} from 'next/headers';
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
@@ -112,10 +110,10 @@ export const authRouter = createTRPCRouter({
                     message: "Failed to login"
                 });
             }
-
+            //https://localhost:3000/api/users/login
             const cookies = await getCookies();
             cookies.set({
-                name: AUTH_COOKIE, 
+                name: `${ctx.db.config.cookiePrefix}-token`, //payload-token by default  
                 value: data.token, 
                 httpOnly: true, 
                 path: "/", 

@@ -14,7 +14,6 @@ import { useMutation } from '@tanstack/react-query';
 import {
     Form, 
     FormControl, 
-    FormDescription, 
     FormField, 
     FormItem, 
     FormLabel, 
@@ -26,6 +25,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
+import { responsePathAsArray } from "graphql";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -38,14 +38,30 @@ export const SignInView = () => {
     const router = useRouter();
 
     const trpc = useTRPC();
-    const login = useMutation(trpc.auth.login.mutationOptions({
+    const login = useMutation({
+        mutationFn: async (values: z.infer<typeof loginSchema>) => {
+            const response = await fetch("/api/users/login", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values), 
+            });
+                 
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || "Login failed");
+            } 
+
+            return response.json();
+        }, 
         onError: (error) => {
             toast.error(error.message)
         }, 
         onSuccess: () => {
             router.push("/");
         }
-    }));
+    });
 
     const form = useForm<z.infer<typeof loginSchema>>({
         mode: "all", 
@@ -87,7 +103,7 @@ export const SignInView = () => {
                             </Button>
                         </div>
                         <h1 className="text-4xl font-medium">
-                            Join to our community! you will make money...
+                            Login and start making money!
                         </h1>
                         
                         <FormField
