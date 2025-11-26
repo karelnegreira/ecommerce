@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import {useForm} from 'react-hook-form';
 import { Poppins } from "next/font/google"
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 
 import {
@@ -25,7 +25,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
-import { responsePathAsArray } from "graphql";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -38,30 +37,17 @@ export const SignInView = () => {
     const router = useRouter();
 
     const trpc = useTRPC();
-    const login = useMutation({
-        mutationFn: async (values: z.infer<typeof loginSchema>) => {
-            const response = await fetch("/api/users/login", {
-                method: "POST", 
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values), 
-            });
-                 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || "Login failed");
-            } 
+    const queryClient = useQueryClient();
 
-            return response.json();
-        }, 
+    const login = useMutation(trpc.auth.login.mutationOptions({
         onError: (error) => {
             toast.error(error.message)
         }, 
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
             router.push("/");
         }
-    });
+    }));
 
     const form = useForm<z.infer<typeof loginSchema>>({
         mode: "all", 
