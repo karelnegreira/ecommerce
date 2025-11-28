@@ -38,9 +38,10 @@ export const SearchInput = ({disabled}: Props) => {
                 <ListFilterIcon />
             </Button>
             { session.data?.user && (
-                <Button variant="elevated">
+                <Button asChild variant="elevated">
                     <Link href="/library">
-                        <BookmarkCheckIcon />
+                        <BookmarkCheckIcon  className="mr-2" />
+                        Library
                     </Link>
                 </Button>
             )}
