@@ -9,6 +9,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import NavbarSidebar from "./navbar-sidebar";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -22,6 +24,7 @@ interface NavbarItemProps {
 }
 
 const NavbarItem = ({href, children, isActive} : NavbarItemProps) => {
+
     return (
         <Button 
             asChild 
@@ -48,6 +51,10 @@ const navbarItems = [
 export const Navbar = () => {
 
     const pathname = usePathname();
+
+    const trpc = useTRPC();
+
+    const session = useQuery(trpc.auth.session.queryOptions());
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -80,7 +87,20 @@ export const Navbar = () => {
             ))
         }
       </div>
+        { session.data?.user ? (
+            <div>
+                <Button
+                    asChild
+                    variant="secondary"
+                    className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:bg-pink-400 hover:text-black transition-colors text-lg"
+                >   
+                    <Link href="/admin">
+                        Dashboard
+                    </Link>  
+                </Button>
+            </div>
 
+        ) : (
       <div className="hidden lg:flex">
         <Button
             asChild
@@ -102,6 +122,7 @@ export const Navbar = () => {
             </Link>  
         </Button>
       </div>
+      )}
       <div className="flex lg:hidden items-center justify-center">
             <Button 
                 variant="ghost"
