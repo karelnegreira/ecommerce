@@ -25,6 +25,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
+import { responsePathAsArray } from "graphql";
 
 const poppins = Poppins({
     subsets: ["latin"], 
@@ -36,18 +37,33 @@ export const SignInView = () => {
 
     const router = useRouter();
 
-    const trpc = useTRPC();
-    const queryClient = useQueryClient();
+     
 
-    const login = useMutation(trpc.auth.login.mutationOptions({
+    const login = useMutation({
+        mutationFn: async (values: z.infer<typeof loginSchema>) => {
+            const response = await fetch("/api/users/login", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json", 
+                }, 
+                body: JSON.stringify(values), 
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || "Login failed");
+            }
+
+            return response.json();
+        }, 
         onError: (error) => {
             toast.error(error.message)
         }, 
         onSuccess: async () => {
-            await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
+            
             router.push("/");
-        }
-    }));
+        }, 
+    });
 
     const form = useForm<z.infer<typeof loginSchema>>({
         mode: "all", 
