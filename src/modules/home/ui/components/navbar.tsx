@@ -8,7 +8,7 @@ import { Poppins } from "next/font/google"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import NavbarSidebar from "./navbar-sidebar";
+import { NavbarSidebar } from "./navbar-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 

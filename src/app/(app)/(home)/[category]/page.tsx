@@ -8,11 +8,11 @@ interface Props {
 
 const Page = async ({ params }: Props) => {
     const { category } = await params;
+    console.log("The category is " + category)
 
     return (
         <div>
-            Category: {category}
-            
+            Category: {category}     
         </div>
     )
 }
