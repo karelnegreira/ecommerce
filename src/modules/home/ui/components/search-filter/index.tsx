@@ -7,6 +7,7 @@ import { SearchInput } from "./search-input";
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { DEFAULT_BG_COLOR } from '../constants';
+import {BreadcrumNavigation} from './breadcrums-navigation';
 
 export const SearchFilters = () => {
 
@@ -38,6 +39,11 @@ export const SearchFilters = () => {
         <div className='hidden lg:block'>
           <Categories data={data}/>
         </div>
+        <BreadcrumNavigation 
+          activeCategory={activeCategory}
+          activeCategoryName={activeCategoryName}
+          activeSubcategoryName={activeSubcategoryName}
+        />
     </div>
   );
 };
