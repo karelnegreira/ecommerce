@@ -7,7 +7,7 @@ import { SearchInput } from "./search-input";
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { DEFAULT_BG_COLOR } from '../constants';
-import {BreadcrumNavigation} from './breadcrums-navigation';
+import { BreadcrumNavigation } from './breadcrums-navigation';
 
 export const SearchFilters = () => {
 
