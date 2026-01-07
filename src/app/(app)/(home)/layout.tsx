@@ -1,10 +1,8 @@
 
-import { getPayload } from "payload";
-import configPromise from '@payload-config';
 
-import Footer from "./footer";
-import {Navbar} from "./navbar";
-import { SearchFilterLoading, SearchFilters } from "./search-filter";
+import Footer from "@/modules/home/ui/components/footer";
+import {Navbar} from "@/modules/home/ui/components/navbar";
+import { SearchFilterLoading, SearchFilters } from "@/modules/home/ui/components/search-filter";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";

@@ -23,7 +23,7 @@ interface Props {
 }
 
 
-const NavbarSidebar = ({items, open, onOpenChange}: Props) => {
+export const NavbarSidebar = ({items, open, onOpenChange}: Props) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
@@ -65,4 +65,3 @@ const NavbarSidebar = ({items, open, onOpenChange}: Props) => {
   )
 }
 
-export default NavbarSidebar;
