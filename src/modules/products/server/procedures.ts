@@ -11,7 +11,6 @@ export const productsRouter = createTRPCRouter({
             depth: 1,  //populate catgory and image  
           });
 
-
         return data;
     }),
 });
