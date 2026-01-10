@@ -7,25 +7,11 @@ export const productsRouter = createTRPCRouter({
 
 
         const data = await ctx.db.find({
-            collection: "categories", 
-            depth: 1,  //populate subcategorys
-            pagination: false, 
-            where: {
-              parent: {
-                exists: false, 
-              },
-            },
-            sort: "name"
+            collection: "products", 
+            depth: 1,  //populate catgory and image  
           });
 
-          const formattedData = data.docs.map((doc) => ({
-            ...doc, 
-            subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-              ...(doc as Category), 
-              subcategories: undefined, 
-            }))
-          }));
 
-        return formattedData;
+        return data;
     }),
 });
