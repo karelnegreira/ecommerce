@@ -10,7 +10,16 @@ export const ProductList = () => {
 
     return (
         <div> 
-            {JSON.stringify(data, null, 2)};
-        </div>                                                                                                                                                                                                                 </>
+            {JSON.stringify(data, null, 2)}
+        </div>                                                                                                                                                                                                              
+    );
+};
+
+export const ProductListSkeleton = () => {
+    return (
+        <div>
+            Loading...
+        </div>
     )
 }
+
