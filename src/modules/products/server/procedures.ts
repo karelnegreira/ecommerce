@@ -11,6 +11,9 @@ export const productsRouter = createTRPCRouter({
             depth: 1,  //populate catgory and image  
           });
 
+        //artificial delay for dev/test
+        //await new Promise((resolve) => setTimeout(resolve, 5000));
+
         return data;
     }),
 });
