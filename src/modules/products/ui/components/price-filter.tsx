@@ -1,5 +1,12 @@
+"use client";
 
-interface Props {
+import { ChangeEvent } from "react";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+
+interface PriceFilterProps {
     minPrice?: string | null;
     maxPrice?: string | null;
     onMinPriceChange: (value: string) => void;
@@ -26,7 +33,20 @@ export const formatAsCurrency = (value: string) => {
     currency: "USD", 
     minimumFractionDigits: 0, 
     maximumFractionDigits: 2, 
-  })
+  }).format(numberValue);
+};
 
+export const PriceFilter = ({
+    minPrice, 
+    maxPrice, 
+    onMinPriceChange, 
+    onMaxPriceChange
+}: PriceFilterProps) => {
+    return (
+        <div className="flex flex-col gap-2">
+            
+        </div>
+    )
 }
+
 

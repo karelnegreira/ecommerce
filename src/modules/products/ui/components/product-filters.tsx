@@ -4,6 +4,7 @@
 import { cn } from "@/lib/utils";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
+import { PriceFilter } from "./price-filter";
 
 interface ProductFilterProps {
   title: string;
@@ -43,7 +44,7 @@ export const ProductFilters = () => {
           </button>
         </div>
         <ProductFilter title="Price" className="border-b-0">
-            <p>Price filter</p>
+            <PriceFilter />
         </ProductFilter>
       </div>
     </div>
