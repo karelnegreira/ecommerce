@@ -10,16 +10,30 @@ export const productsRouter = createTRPCRouter({
         z.object(
             {
                 category: z.string().nullable().optional(), 
+                minPrice: z.string().nullable().optional(), 
+                maxPrice: z.string().nullable().optional(), 
             }
         ), 
     ).query(async ( {ctx, input}) => {
         const where: Where = {}
 
+        if (input.minPrice) {
+            where.price = {
+                greater_than_equal: input.minPrice
+            }
+        }
+
+        if (input.maxPrice) {
+            where.price = {
+                less_than_equal: input.maxPrice
+            }
+        }
+
         if (input.category) {
             const categoriesData = await ctx.db.find({
                 collection: "categories", 
                 limit: 1, 
-                depth: 1, //populate subcategorySlugs
+                depth: 1, //populate s
                 pagination: false, 
                 where: {
                     slug: {
@@ -28,28 +42,29 @@ export const productsRouter = createTRPCRouter({
                 }
             });
 
-            console.log(JSON.stringify(categoriesData, null, 2));
+            //console.log(JSON.stringify(categoriesData, null, 2));
 
             const formattedData = categoriesData.docs.map((doc) => ({
                 ...doc, 
-                subcategorySlugs: (doc.subcategorySlugs?.docs ?? []).map((doc) => ({
+                subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
                   ...(doc as Category), 
-                  subcategorySlugs: undefined, 
+                  s: undefined, 
                 }))
               }));
             
-            const subcategorySlugs = [];
+            const subcategoriesSlugs = [];
             const parentCategory = formattedData[0];
 
             if (parentCategory) {
-                subcategorySlugs.push(
-                    ...parentCategory.subcategorySlugs.map((subcategory) => subcategory.slug)
+                subcategoriesSlugs.push(
+                    ...parentCategory.subcategories.map((subcategory) => subcategory.slug)
                 );
+                where["category.slug"] = {
+                    in: [parentCategory.slug, ...subcategoriesSlugs]
+                }
             }
 
-            where["category.slug"] = {
-                in: [parentCategory.slug, ...subcategorySlugs]
-            }
+            
         }
 
         const data = await ctx.db.find({
