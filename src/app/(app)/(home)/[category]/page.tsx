@@ -4,16 +4,23 @@ import {  getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 
+import { SearchParams } from "nuqs/server";
+import { loadProductFilters } from "@/modules/products/hooks/use-product-filters";
+
 interface Props {
     params: Promise<{
         category: string;
         
-    }>
+    }>, 
+    searchParams: Promise<SearchParams>;
 }; 
 
-const Page = async ({params}: Props) => {
+const Page = async ({params, searchParams}: Props) => {
 
     const {category} = await params;
+    const filters = await loadProductFilters(searchParams);
+
+    console.log(JSON.stringify(filters), "THIS IS FROM RSC")
     
 
     const queryClient = getQueryClient();
