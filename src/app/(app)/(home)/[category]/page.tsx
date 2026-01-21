@@ -27,6 +27,7 @@ const Page = async ({params, searchParams}: Props) => {
     
     void queryClient.prefetchQuery(trpc.products.getMany.queryOptions({
         category, 
+        ...filters 
     }));
 
     return (
