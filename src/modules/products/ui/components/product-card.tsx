@@ -54,6 +54,7 @@ export const ProductCard = ({id, name, imageUrl, authorUsername, authorImageUrl,
                         <p className="text-sm font-medium ">
                             {new Intl.NumberFormat("en-US", {
                                 style: "currency", 
+                                maximumFractionDigits: 2, 
                                 currency: "USD"
                             }).format(Number(price))}
                         
@@ -63,5 +64,11 @@ export const ProductCard = ({id, name, imageUrl, authorUsername, authorImageUrl,
             </div>
         </Link>
     )
-}
+};
+
+export const ProductCardSkeleton = () => {
+    return (
+        <div className="w-full aspect-3/4 bg-neutral-200 rounded-lg animate-pulse" />
+    );
+};
 
