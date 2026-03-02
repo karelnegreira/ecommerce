@@ -6,6 +6,7 @@ import { useProductFilters } from "../../hooks/use-product-filters";
 import { ProductCard } from "./product-card";
 import { DEFAULT_LIMIT } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { InboxIcon } from "lucide-react";
 
 
 interface Props {
@@ -29,6 +30,17 @@ export const ProductList = ({category}: Props) => {
             }
         }, 
     ));
+
+    if (data.pages?.[0]?.docs.length === 0) {
+        return (
+            <div className="border border-black border-dashed flex items-center 
+                            justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
+
+                <InboxIcon />
+                <p className="text-base font-medium">No product found</p>
+            </div>
+        )
+    }
 
     return (
         <>
