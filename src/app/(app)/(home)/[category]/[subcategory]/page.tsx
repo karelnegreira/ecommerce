@@ -18,9 +18,6 @@ const Page = async ({params, searchParams}: Props) => {
     const filters = await loadProductFilters(searchParams)
     //const {minPrice, maxPrice} = await searchParams;
 
-    
-    
-
     const queryClient = getQueryClient();
     
     void queryClient.prefetchQuery(trpc.products.getMany.queryOptions({
