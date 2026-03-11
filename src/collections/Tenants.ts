@@ -34,10 +34,11 @@ export const Tenants: CollectionConfig = {
     }, 
     {
         name: "stripeAccountId", 
-        type: "text", 
+        type: "checkbox", 
         required: true, 
         admin: {
             readOnly: true,
+            description: "You cannot create products until you submit your Stripe details"
         }, 
     }, 
   ],
