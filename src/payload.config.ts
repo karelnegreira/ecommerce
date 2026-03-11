@@ -5,6 +5,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import { multiTenantPlugin, MultiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import sharp from 'sharp'
 
 import { Users } from './collections/Users';
@@ -37,6 +38,15 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    multiTenantPlugin({
+      collections: {
+        products: {},  
+      }, 
+      tenantsArrayField: {
+        includeDefaultField: false, 
+      }, 
+      userHasAccessToAllTenants: (user) => Boolean(user?.roles?.includes("super-admin"))
+    })
     // storage-adapter-placeholder
   ],
 })

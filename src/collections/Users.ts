@@ -11,8 +11,18 @@ export const Users: CollectionConfig = {
       name: "username", 
       required: true, 
       unique: true, 
-      type: "text", 
+      type: "text" , 
     }, 
+    {
+      admin: {
+        position: "sidebar", 
+      }, 
+      name: "roles", 
+      type: "select", 
+      defaultValue: ["user"], 
+      hasMany: true, 
+      options: ["super-admin", "user"], 
+    }
   ],
 }
 ///home/karel/Documents/ReactProjects2025/ecommerce/src/collections/Users.ts
