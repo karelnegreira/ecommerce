@@ -5,7 +5,6 @@ export const Tenants: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
   },
-  auth: true,
   fields: [
     {
       name: "name", 
@@ -34,7 +33,7 @@ export const Tenants: CollectionConfig = {
     }, 
     {
         name: "stripeAccountId", 
-        type: "checkbox", 
+        type: "text", 
         required: true, 
         admin: {
             readOnly: true,
