@@ -156,6 +156,49 @@ export interface User {
   id: string;
   username: string;
   roles?: ('super-admin' | 'user')[] | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  /**
+   * This is the store's name (eg. Karel Pro)
+   */
+  name: string;
+  /**
+   * This is the domain of the store: (e.g [slug].funroad.ae)
+   */
+  slug: string;
+  image?: (string | null) | Media;
+  /**
+   * You cannot create products until you submit your Stripe details
+   */
+  stripeAccountId: boolean;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -230,43 +273,6 @@ export interface Product {
   refundPolicy?: ('30-day' | '15-day' | '7-day' | '3-day' | '1-day' | 'no-refund') | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants".
- */
-export interface Tenant {
-  id: string;
-  /**
-   * This is the store's name (eg. Karel Pro)
-   */
-  name: string;
-  /**
-   * This is the domain of the store: (e.g [slug].funroad.ae)
-   */
-  slug: string;
-  image?: (string | null) | Media;
-  /**
-   * You cannot create products until you submit your Stripe details
-   */
-  stripeAccountId: boolean;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -369,6 +375,12 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   username?: T;
   roles?: T;
+  tenants?:
+    | T
+    | {
+        tenant?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
