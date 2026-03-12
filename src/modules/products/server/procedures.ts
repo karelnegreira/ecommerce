@@ -2,7 +2,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import z from "zod";
 
 import type { Sort, Where } from "payload";
-import { Category, Media, Product } from "@/payload-types";
+import { Category, Media, Product, Tenant } from "@/payload-types";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 
@@ -101,6 +101,8 @@ export const productsRouter = createTRPCRouter({
             limit: input.limit, 
           });
 
+          console.log(JSON.stringify(data.docs, null, 2));
+
         //artificial delay for dev/test
         //await new Promise((resolve) => setTimeout(resolve, 5000));
 
@@ -109,6 +111,7 @@ export const productsRouter = createTRPCRouter({
             docs: data.docs.map((doc) => ({
                 ...doc, 
                 image: doc.image as Media | null, 
+                tenant: doc.tenant as Tenant, 
             }))
         };
     }),
