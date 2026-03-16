@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout = ({children, params}: LayoutProps) => {
     return (
-        <div className="min-h-screen bg-[#F4F480] flex flex-col">
+        <div className="min-h-screen bg-[#AA336A] flex flex-col">
             {children}
         </div>
     )
