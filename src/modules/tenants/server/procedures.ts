@@ -1,5 +1,7 @@
-import { DEFAULT_LIMIT } from "@/constants";
+
+import { Media } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { Tenant } from "@payloadcms/plugin-multi-tenant/dist/types";
 import { TRPCError } from "@trpc/server";
 import z from "zod";
 
@@ -31,6 +33,6 @@ export const tenantsRouter = createTRPCRouter({
             throw new TRPCError({code: "NOT_FOUND", message: "Tenant not found"});
         }
 
-        return tenant;
+        return tenant as Tenant & { image: Media | null };
     }),
 });
