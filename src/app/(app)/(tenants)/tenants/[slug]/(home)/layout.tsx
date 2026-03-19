@@ -1,9 +1,8 @@
-import { DEFAULT_LIMIT } from "@/constants";
 import { Footer } from "@/modules/tenants/ui/components/footer";
-import { Navbar } from "@/modules/tenants/ui/components/navbar";
+import { Navbar, NavbarSkeleton } from "@/modules/tenants/ui/components/navbar";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { PathParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { Suspense } from "react";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -22,7 +21,9 @@ const Layout = async ({children, params}: LayoutProps) => {
     return (
         <div className="min-h-screen bg-[#FFB6C1] flex flex-col">
             <HydrationBoundary state={dehydrate(queryClient)}>
-                <Navbar slug={slug}/>
+                <Suspense fallback={<NavbarSkeleton />}>
+                    <Navbar slug={slug}/>
+                </Suspense>
             </HydrationBoundary>
             
             <div className="flex-1">
