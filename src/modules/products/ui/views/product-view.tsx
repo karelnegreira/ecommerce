@@ -1,6 +1,7 @@
 "use client";
 
 
+import { StarRating } from "@/components/star-rating";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -54,6 +55,12 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                         {data.tenant.name}
                                     </p>
                                 </Link>
+                            </div>
+
+                            <div className="hidden lg:flex px-6 py-4 items-center justify-center" >
+                                <div className="flex items-center gap-1">
+                                    <StarRating rating={5}  iconClassName="size-4"/>
+                                </div>
                             </div>
                         </div>
                     </div>
