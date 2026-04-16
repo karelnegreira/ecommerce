@@ -63,6 +63,28 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
+                            <div className="flex items-center gap-1">
+                                <StarRating 
+                                    rating={4}
+                                    iconClassName="size-4"
+                                />
+                                <p className="text-base font-medium">
+                                    {5} ratings
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="p-6">
+                            {data.description ? (
+                                <p>{data.description}</p>
+                            ) : (
+                                <p>
+                                    No description provided
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
