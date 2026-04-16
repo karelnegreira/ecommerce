@@ -80,7 +80,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                             {data.description ? (
                                 <p>{data.description}</p>
                             ) : (
-                                <p>
+                                <p className="font-medium text-muted-foreground italic">
                                     No description provided
                                 </p>
                             )}
