@@ -92,8 +92,11 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                         <div className="border-t lg:border-t-0 lg:border-l h-full">
                             <div className="flex flex-col gap-4 p-6 border-b">
                                 <div className="flex flex-row items-center gap-2">
-                                    <Button>
-                                        Add to card
+                                    <Button
+                                        variant="elevated"
+                                        className="flex-1 bg-pink-400 text-gray font-bold  drop-shadow-lg"
+                                    >
+                                        Add to cart
                                     </Button>
                                 </div>
                             </div>
