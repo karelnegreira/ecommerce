@@ -1,13 +1,17 @@
 "use client";
 
+//TODO add real ratings 
 
 import { StarRating } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 
 interface ProductViewProps {
     productId: string;
@@ -98,6 +102,44 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     >
                                         Add to cart
                                     </Button>
+                                    <Button
+                                        className="size-12"
+                                        variant="elevated"
+                                        onClick={() => {}}
+                                        disabled={false}
+                                    >
+                                        <LinkIcon />
+                                    </Button>
+                                </div>
+
+                                <p className="text-center font-medium">
+                                    {data.refundPolicy === "no-refunds" ? "No refunds" : `${data.refundPolicy} money back guarantee`}
+                                </p>
+                            </div>
+
+                            <div className="p-6">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-xl font-medium">Ratings</h3>
+                                    <div className="flex items-center gap-x-1 font-medium">
+                                        <StarIcon className="size-4 fill-black" />
+                                        <p>({5})</p>
+                                        <p className="text-base">{5} ratings</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4">
+                                    {[5, 4, 3, 2, 1].map((stars) => (
+                                        <Fragment key={stars}> 
+                                            <div className="font-medium"> {stars} {stars === 1 ? "star" : "stars"}</div>
+                                            <Progress 
+                                                value={5}
+                                                className="h-[1lh]"
+                                            />
+                                            <div className="font-medium">
+                                                {5}%
+                                            </div>
+                                        </Fragment>
+                                    ))}
                                 </div>
                             </div>
                         </div>
