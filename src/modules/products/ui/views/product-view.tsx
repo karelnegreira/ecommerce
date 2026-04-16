@@ -2,6 +2,7 @@
 
 
 import { StarRating } from "@/components/star-rating";
+import { Button } from "@/components/ui/button";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -84,6 +85,18 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     No description provided
                                 </p>
                             )}
+                        </div>
+                    </div>
+
+                    <div className="col-span-2">
+                        <div className="border-t lg:border-t-0 lg:border-l h-full">
+                            <div className="flex flex-col gap-4 p-6 border-b">
+                                <div className="flex flex-row items-center gap-2">
+                                    <Button>
+                                        Add to card
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
