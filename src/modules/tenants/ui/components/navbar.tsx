@@ -1,10 +1,28 @@
 "use client";
 
 import { generateTenantUrl } from "@/lib/utils";
+//import { CheckoutButton } from "@/modules/checkout/ui/components/checkout-button";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { Button } from "@/components/ui/button";
+import { ShoppingCartIcon } from "lucide-react";
+
+
+const CheckoutButton = dynamic(
+    () => import("@/modules/checkout/ui/components/checkout-button").then(
+        (mod) => mod.CheckoutButton
+    ), 
+    {
+        ssr: false, 
+        loading: () => <Button disabled className="flex bg-white">
+            <ShoppingCartIcon />
+        </Button> 
+    }
+)
+
 
 interface Props {
     slug: string, 
@@ -27,7 +45,8 @@ export const Navbar = ({ slug }: Props) => {
                         />
                     )}
                     <p className="text-xl">{ data.name }</p>
-                </Link>           
+                </Link>  
+                <CheckoutButton tenantSlug={slug}/>         
             </div>
         </nav>
     );
