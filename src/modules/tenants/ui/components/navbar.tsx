@@ -18,8 +18,8 @@ const CheckoutButton = dynamic(
     {
         ssr: false, 
         loading: () => <Button disabled className="flex bg-white">
-            <ShoppingCartIcon />
-        </Button> 
+                            <ShoppingCartIcon className="bg-black"/>
+                        </Button> 
     }
 )
 
@@ -46,7 +46,7 @@ export const Navbar = ({ slug }: Props) => {
                     )}
                     <p className="text-xl">{ data.name }</p>
                 </Link>  
-                <CheckoutButton tenantSlug={slug}/>         
+                <CheckoutButton hideIfEmpty tenantSlug={slug}/>         
             </div>
         </nav>
     );
@@ -56,7 +56,11 @@ export const NavbarSkeleton = () => {
     return (
         <nav className="h-20 border-b font-medium bg-white">
             <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
-                {/*TODO: skeleton for checkout button */}
+                {
+                    <Button disabled className="flex bg-white">
+                        <ShoppingCartIcon className="bg-black"/>
+                    </Button> 
+                }
             </div>
         </nav>
     );
