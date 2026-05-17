@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { generateTenantUrl } from '@/lib/utils';
 import { CheckoutItem } from '../components/checkout-items';
 import { CheckoutSidebar } from '../components/checkout-sidebar';
-import { InboxIcon, Loader } from 'lucide-react';
+import { InboxIcon, Loader, LoaderIcon } from 'lucide-react';
 
 interface CheckoutViewProps {
     tenantSlug: string;
@@ -33,22 +33,22 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
 
     if (isLoading) {
         return (
-            <div className="border border-black border-dashed flex items-center 
-                                justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-                    <Loader />
+            <div className="lg:pt-16 pt-4 px-4 lg:px-12">
+                <div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
+                    <LoaderIcon className="text-muted-foreground animate-spin" />
                 </div>
+            </div>
         )
     }
 
     if (data?.totalDocs === 0) 
-
         return (
-            <div className="border border-black border-dashed flex items-center 
-                                justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-
+            <div className="lg:pt-16 pt-4 px-4 lg:px-12">
+                <div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
                     <InboxIcon />
                     <p className="text-base font-medium">No product found</p>
                 </div>
+            </div>
         )
 
     return (
