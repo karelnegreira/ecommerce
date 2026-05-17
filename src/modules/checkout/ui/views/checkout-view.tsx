@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { generateTenantUrl } from '@/lib/utils';
 import { CheckoutItem } from '../components/checkout-items';
 import { CheckoutSidebar } from '../components/checkout-sidebar';
+import { InboxIcon, Loader } from 'lucide-react';
 
 interface CheckoutViewProps {
     tenantSlug: string;
@@ -17,7 +18,7 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
     const { productIds, removeProduct, clearAllCarts } = useCart(tenantSlug)
 
     const trpc = useTRPC();
-    const { data, error } = useQuery(trpc.checkout.getProducts.queryOptions({
+    const { data, error, isLoading } = useQuery(trpc.checkout.getProducts.queryOptions({
         ids: productIds
     }));
 
@@ -29,6 +30,26 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
             toast.message("Inavlid product found, cart cleared.")
         }
     }, [error, clearAllCarts])
+
+    if (isLoading) {
+        return (
+            <div className="border border-black border-dashed flex items-center 
+                                justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
+                    <Loader />
+                </div>
+        )
+    }
+
+    if (data?.totalDocs === 0) 
+
+        return (
+            <div className="border border-black border-dashed flex items-center 
+                                justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
+
+                    <InboxIcon />
+                    <p className="text-base font-medium">No product found</p>
+                </div>
+        )
 
     return (
         <div className="lg:pt-16 pt-4 px-4 lg:px-12">
