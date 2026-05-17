@@ -42,6 +42,16 @@ export const CheckoutItem = ({
                     />
                 </div>
             </div>
+            <div className='py-4 flex flex-col justify-between'>
+                <div>
+                    <Link href={productUrl}>
+                        <h4 className='font-bold underline'>{name}</h4>
+                    </Link>
+                    <Link href={productUrl}>
+                        <p className='font-bold underline'>{tenantName}</p>
+                    </Link>
+                </div>
+            </div>
         </div>
     )
 }
