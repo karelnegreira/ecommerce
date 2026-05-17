@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { cn } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface CheckoutItemProps {
     isLast?: boolean;
@@ -48,9 +49,18 @@ export const CheckoutItem = ({
                         <h4 className='font-bold underline'>{name}</h4>
                     </Link>
                     <Link href={productUrl}>
-                        <p className='font-bold underline'>{tenantName}</p>
+                        <p className='font-medium underline'>{tenantName}</p>
                     </Link>
                 </div>
+            </div>
+
+            <div className="py-4 flex flex-col justify-between">
+                <p className="font-medium">
+                    { formatCurrency(price) }
+                </p>
+                <Button className="underline font-medium" onClick={onRemove} type="button">
+                    Remove
+                </Button>
             </div>
         </div>
     )
