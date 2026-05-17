@@ -7,6 +7,7 @@ import { useCart } from "../../hooks/use-cart";
 import { useEffect } from "react";
 import { generateTenantUrl } from '@/lib/utils';
 import { CheckoutItem } from '../components/checkout-items';
+import { CheckoutSidebar } from '../components/checkout-sidebar';
 
 interface CheckoutViewProps {
     tenantSlug: string;
@@ -39,7 +40,6 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
                             data?.docs.map((product, index) => (
                                 <CheckoutItem
                                     key={product.id}
-                                    id={product.id}
                                     isLast={index === data.docs.length - 1}
                                     imageUrl={product.image?.url}
                                     name={product.name}
@@ -55,7 +55,12 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
                 </div>
 
                 <div className="lg:col-span-3">
-                    Checkout sidebar
+                    <CheckoutSidebar
+                        total={data?.totalPrice}
+                        onCheckout={() => {}}
+                        isCanceled={false}
+                        isPending={false}
+                    />
                 </div>
             </div>
         </div>
