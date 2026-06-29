@@ -2,7 +2,7 @@
 
 import { toast } from 'sonner';
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCart } from "../../hooks/use-cart";
 import { useEffect } from "react";
 import { generateTenantUrl } from '@/lib/utils';
@@ -20,6 +20,11 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
     const trpc = useTRPC();
     const { data, error, isLoading } = useQuery(trpc.checkout.getProducts.queryOptions({
         ids: productIds
+    }));
+
+    const purchase = useMutation(trpc.checkout.purchase.mutationOptions({
+        onSuccess: () => {}, 
+        onError: () => {}
     }));
 
     useEffect(() => {
@@ -78,7 +83,7 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
                 <div className="lg:col-span-3">
                     <CheckoutSidebar
                         total={data?.totalPrice}
-                        onCheckout={() => {}}
+                        onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
                         isCanceled={false}
                         isPending={false}
                     />
