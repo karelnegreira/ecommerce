@@ -18,7 +18,7 @@ export const checkoutRouter = createTRPCRouter({
         )
         .mutation(async ({ctx, input}) => {
             const products = await ctx.db.find({
-                collection: "product", 
+                collection: "products", 
                 depth: 2, 
                 where: {
                     and: [
@@ -80,11 +80,11 @@ export const checkoutRouter = createTRPCRouter({
                     }
                 }));
 
-                const checkout = stripe.checkout.sessions.create({
+                const checkout = await stripe.checkout.sessions.create({
                     customer_email: ctx.session.user.email, 
                     success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?success=true`,
                     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?cancel=true`,
-                    node: "payment", 
+                    mode: "payment", 
                     line_items: lineItems, 
                     invoice_creation: {
                         enabled: true,
