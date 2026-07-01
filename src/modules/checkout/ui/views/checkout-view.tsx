@@ -44,12 +44,13 @@ export const CheckoutPageView = ({tenantSlug}: CheckoutViewProps) => {
 
     useEffect(() => {
         if (states.success) {
+            setStates({ success: false, cancel: false });
             clearCart()
             //TODO: invalidate library
             router.push("/products")
         }
         
-    }, [states.success, clearCart, router])
+    }, [states.success, clearCart, router, setStates])
 
     useEffect(() => {
         if (!error) return;
