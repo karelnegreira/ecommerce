@@ -5,7 +5,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import { multiTenantPlugin, MultiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
+import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import sharp from 'sharp'
 
 import { Users } from './collections/Users';

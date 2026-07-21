@@ -20,16 +20,16 @@ export async function POST(req: Request) {
         const errorMessage = error instanceof Error ? error.message: "Unknown error";
 
         if (error! instanceof Error) {
-            console.log(`XXX Error message: ${errorMessage}`)
+            console.log(`❌ Error message: ${errorMessage}`)
         }
 
         return NextResponse.json(
-            { message: `Webhooks Error: ${errorMessage}` }, 
+            { message: `❌ Webhook error: ${errorMessage}` }, 
             { status: 400 }
         )
     }
 
-    console.log("Success: ", event.id)
+    console.log("✅ Success: ", event.id)
 
     const permittedEvents: string[] = [
         "checkout.session.completed", 
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
                     const expandedSession = await stripe.checkout.sessions.retrieve(
                         data.id, 
                         {
-                            expand: ["line_items.data.price.product"]
+                            expand: ["line_items.data.price.product"], 
                         }, 
                     );
 
@@ -95,5 +95,5 @@ export async function POST(req: Request) {
         }
     }
 
-    return NextResponse.json({message: "Received"}, {status: 200})
+    return NextResponse.json({message: "Received"}, {status: 200});
 };
