@@ -28,18 +28,28 @@ export const useCart = (tenantSlug:string) => {
         }
     }, [addProduct, removeProduct, productIds, tenantSlug]);
 
-    const isProductInCart = (productId: string) => {
+    const isProductInCart = useCallback((productId: string) => {
         return productIds.includes(productId);
-    };
+    }, [productIds]);
 
-    const clearTenantCart = () => {
+    const clearTenantCart = useCallback(() => {
         clearCart(tenantSlug)
-    };
+    }, [tenantSlug, clearCart]);
+
+    const handleAddProduct = useCallback((productId: string) => {
+        addProduct(tenantSlug, productId)
+    }, [addProduct, tenantSlug])
+
+
+    const handleRemoveProduct = useCallback((productId: string) => {
+        removeProduct(tenantSlug, productId)
+    }, [removeProduct, tenantSlug])
+
 
     return {
         productIds, 
-        addProduct: (productId: string) => addProduct(tenantSlug, productId), 
-        removeProduct: (productId: string) => addProduct(tenantSlug, productId), 
+        addProduct: handleAddProduct, 
+        removeProduct: handleRemoveProduct, 
         clearCart: clearTenantCart, 
         clearAllCarts, 
         toggleProducts, 
