@@ -120,6 +120,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                         </Button>
                                     ) : (
                                     <CartButton 
+                                        isPurchased={data.isPurchased}
                                         productId={productId}
                                         tenantSlug={tenantSlug}
                                    />
