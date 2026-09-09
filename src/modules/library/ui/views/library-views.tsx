@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { ArrowLeftIcon } from 'lucide-react';
+import { ProductList, ProductListSkeleton } from "../components/product-list";
+import { Suspense } from "react";
 
 export const LibraryView = () => {
 
@@ -20,7 +22,9 @@ export const LibraryView = () => {
                     </div>
                 </header>
                 <section className="max-w-(--breakpoint-xl) mx-auto px-4 lg:px-12 flex flex-col gap-y-4">
-                    
+                    <Suspense fallback={<ProductListSkeleton />}>
+                        <ProductList />  
+                    </Suspense>     
                 </section>
         </div>
     )

@@ -31,6 +31,7 @@ export const libraryRouter = createTRPCRouter({
                 }
             }
           });
+          
           const productIds = ordersData.docs.map((order) => order.product)
 
           const productsData = await ctx.db.find({
