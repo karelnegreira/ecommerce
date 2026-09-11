@@ -15,16 +15,21 @@ export const ProductList = () => {
     
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useSuspenseInfiniteQuery(trpc.library.getMany.infiniteQueryOptions(
         {
-        limit: DEFAULT_LIMIT
+            limit: DEFAULT_LIMIT
         }, 
         {
             getNextPageParam: (lastPage) => {
                 return lastPage.docs.length > 0 ? lastPage.nextPage : undefined;
-            }
-        }, 
+            },
+        }
     ));
 
+    console.log("LIMIT: ", DEFAULT_LIMIT)
+
     if (data.pages?.[0]?.docs.length === 0) {
+        console.log("LIBRARY DATA", data)
+        console.log("LIBRARY PRODUCTS, ", data.pages.flatMap((page) => page.docs))
+
         return (
             <div className="border border-black border-dashed flex items-center 
                             justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">

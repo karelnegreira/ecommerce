@@ -14,7 +14,7 @@ interface ProductCardProps {
     reviewCount: number;
 }
 
-export const ProductCard = ({id, name, imageUrl, tenantSlug, tenantImageUrl, reviewRating, reviewCount, price}: ProductCardProps) => {
+export const ProductCard = ({id, name, imageUrl, tenantSlug, tenantImageUrl, reviewRating, reviewCount}: ProductCardProps) => {
     
     
     return (
@@ -30,7 +30,6 @@ export const ProductCard = ({id, name, imageUrl, tenantSlug, tenantImageUrl, rev
                     </div>
                     <div className="p-4 border-y flex flex-col gap-3 flex-1">
                         <h2 className="text-lg font-medium line-clamp-4">{name}</h2> 
-                        {/*TODO redirect to user shop */}
                         <div className="flex items-center gap-2" >
                             {tenantImageUrl && (
                                 <Image

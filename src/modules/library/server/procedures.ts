@@ -1,10 +1,8 @@
 import z from "zod";
-import { headers as getHeaders } from 'next/headers';
 
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
-import type { Sort, Where } from "payload";
-import { Category, Media, Product, Tenant } from "@/payload-types";
+import {  Media, Tenant } from "@/payload-types";
 import { DEFAULT_LIMIT } from "@/constants";
 
 
@@ -18,8 +16,6 @@ export const libraryRouter = createTRPCRouter({
             }
         ), 
     ).query(async ( {ctx, input}) => {
-        
-
         const ordersData = await ctx.db.find({
             collection: "orders", 
             depth: 0,  //populate catgory and image  
@@ -28,9 +24,9 @@ export const libraryRouter = createTRPCRouter({
             where: {
                 user: {
                     equals: ctx.session.user.id
-                }
-            }
-          });
+                },
+            },
+          });       
           
           const productIds = ordersData.docs.map((order) => order.product)
 
@@ -42,7 +38,7 @@ export const libraryRouter = createTRPCRouter({
                     in: productIds
                 },
             },
-          })
+          });
 
         return {
             ...productsData, 

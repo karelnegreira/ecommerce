@@ -20,7 +20,7 @@ export const CartButton = ({tenantSlug, productId, isPurchased}: Props) => {
                     asChild
                     className="flex-1 font-medium bg-white"
                 >
-                <Link prefetch={`/library/${productId}`}>
+                <Link prefetch href={`/library/${productId}`}>
                     View in the library 
                 </Link>
             </Button>
