@@ -106,4 +106,44 @@ export const reviewsRouter = createTRPCRouter({
 
             return review;
         }),
+        update: protectedProcedure
+        .input(
+            z.object({
+                reviewId: z.string(), 
+                rating: z.number().min(1, {message: "Rating is required"}).max(5), 
+                description: z.string().min(1, {message: "Description is required" }), 
+            })
+        )
+        .mutation(async ({input, ctx}) => {
+            const existingReview = await ctx.db.findByID({
+                depth: 0, 
+                collection: "reviews", 
+                id: input.reviewId, 
+            });
+
+            if (!existingReview) {
+                throw new TRPCError({
+                    code: "NOT_FOUND", 
+                    message: "Product not found",
+                });
+            }
+
+            if (existingReview.user !== ctx.session.user.id) {
+                throw new TRPCError({
+                    code: "FORBIDDEN", 
+                    message: "You are not allowed to update this review"
+                });
+            }
+
+            const updatedReview = await ctx.db.update({
+                collection: "reviews", 
+                id: input.reviewId, 
+                data: {
+                    rating: input.rating, 
+                    description: input.description, 
+                }, 
+            });
+
+            return updatedReview;
+        }),
     });
