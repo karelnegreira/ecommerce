@@ -19,10 +19,11 @@ export const reviewsRouter = createTRPCRouter({
           });
 
           if (!product) {
-            throw new TRPCError({
-                code: "NOT_FOUND", 
-                message: "Product not found",
-            });
+                throw new TRPCError({
+                    code: "NOT_FOUND", 
+                    message: "Product not found",
+                });
+            }
 
             const reviewsData = await ctx.db.find({
                 collection: "reviews", 
@@ -50,11 +51,59 @@ export const reviewsRouter = createTRPCRouter({
             }
 
             return review;
-          }
-
-        //artificial delay for dev/test
-        //await new Promise((resolve) => setTimeout(resolve, 5000));
-
-        return data;
     }),
-});
+    create: protectedProcedure
+        .input(
+            z.object({
+                productId: z.string(), 
+                rating: z.number().min(1, {message: "Rating is required"}).max(5), 
+                description: z.string().min(1, {message: "Description is required" }), 
+            })
+        )
+        .mutation(async ({input, ctx}) => {
+            const product = await ctx.db.findByID({
+                collection: "products", 
+                id: input.productId, 
+            });
+
+            if (!product) {
+                throw new TRPCError({
+                    code: "NOT_FOUND", 
+                    message: "Product not found",
+                });
+            }
+
+            const existingReviewsData = await ctx.db.find({
+                collection: "reviews", 
+                where: {
+                    and: [
+                        {
+                            product: {equals: input.productId}
+                        }, 
+                        {
+                            user: {equals: ctx.session.user.id}
+                        },
+                    ],
+                },
+            });
+
+            if (existingReviewsData.totalDocs > 0) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST", 
+                    message: "You have already reviewed this product"
+                });
+            }
+
+            const review = await ctx.db.create({
+                collection: "reviews", 
+                data: {
+                    user: ctx.session.user.id, 
+                    product: product.id, 
+                    rating: input.rating, 
+                    description: input.description, 
+                }, 
+            });
+
+            return review;
+        }),
+    });
