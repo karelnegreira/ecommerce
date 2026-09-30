@@ -1,0 +1,16 @@
+
+import { ReviewsGetOneOutput } from '../../../reviews/types'
+
+
+interface Props {
+    productId: string;
+    initialData?: ReviewsGetOneOutput;
+}
+
+export const ReviewForm = ({ productId, initialData }: Props) => {
+    return (
+        <div>
+            Review Form!
+        </div>
+    )
+}
